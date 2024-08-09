@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>Process Image</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Process an Image</h1>
+        <form action="/process_image/" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".jpg,.png" required>
+            <select name="process_type" required>
+                <option value="flip_horizontal">Flip Horizontal</option>
+                <option value="flip_vertical">Flip Vertical</option>
+                <option value="symmetry">Check Symmetry</option>
+            </select>
+            
+            <input type="submit" value="Process">
+        </form>
+        
+        {% if processed_image %}
+            <h2>Processed Image:</h2>
+            <img src="{{ url_for('static', filename=processed_image) }}" alt="Processed Image">
+        {% endif %}
+        
+        {% if vertical_symmetry is not none and horizontal_symmetry is not none %}
+            <h2>Symmetry Results:</h2>
+            <p>Vertical Symmetry: {{ 'Yes' if vertical_symmetry else 'No' }}</p>
+            <p>Horizontal Symmetry: {{ 'Yes' if horizontal_symmetry else 'No' }}</p>
+        {% endif %}
+        
+        <a href="/">Back to Home</a>
+    </div>
+</body>
+</html>
